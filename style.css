@@ -1,83 +1,126 @@
-body{
+/* --- Reset --- */
+body {
     margin: 0;
     padding: 0;
     background-color: #f0f0f0;
-    color:  white;
+    color: white;
+    font-family: sans-serif;
 }
-canvas{
+
+/* --- Canvas --- */
+canvas {
     width: 100%;
     height: 100vh;
     display: block;
     background-color: #000;
 }
 
-.menu{
+/* --- Menu --- */
+.menu {
     display: flex;
     flex-direction: column;
     position: absolute;
-    height: 35vh;
-    width: 20vw;
     top: 25%;
-    left: 40%;
-    border-radius: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 400px;
+    min-width: 250px;
+    height: auto;
     background-color: brown;
-    padding-top: 4vh;
-    border-color: rgb(63, 15, 15);
-    border-style: solid;
-    border-width: 5px;
+    padding: 2em 1em;
+    border-radius: 1.5em;
+    border: 5px solid rgb(63, 15, 15);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    align-items: center;
+    gap: 1em;
 }
 
-.menu button{
-    align-self: center;
-    width: 80%;
-    margin: 10px;
-    padding: 10px;
-    font-size: 16px;
-    color: white;
-    background-color: rgb(128, 32, 32);
-    border-width: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.menu button:hover{
-    background-color: rgb(94, 2, 2);
-}
-.menu h1{
+/* --- Menu Title --- */
+.menu h1 {
     text-align: center;
     color: white;
+    font-size: 2rem;
+    margin: 0;
+    transition: transform 0.5s ease-in-out;
+}
+.menu h1:hover {
+    transform: scale(1.1);
 }
 
-.menu h1:hover{
-    scale: 1.1;
-    transition: scale 0.5s ease-in-out;
+/* --- Buttons --- */
+.menu button {
+    width: 70%;
+    max-width: 200px;
+    padding: 0.8em;
+    font-size: 1rem;
+    color: white;
+    background-color: rgb(128, 32, 32);
+    border: 5px solid #000;
+    border-radius: 0.5em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.menu button:hover {
+    background-color: rgb(94, 2, 2);
 }
 
-.hide{
+/* --- Hide class --- */
+.hide {
     display: none;
 }
 
-.score{
+/* --- Score --- */
+.score {
     position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 24px;
+    top: 1rem;
+    left: 1rem;
+    font-size: 1.5rem;
     color: white;
 }
-.stop{
+
+/* --- Stop button --- */
+.stop {
     position: absolute;
-    right: 30px;
-    top: 25px;
+    top: 1.5rem;
+    right: 1.5rem;
     background-color: brown;
-    height: 40px;
-    width: 80px;
-    border-radius: 10px;
-    font-size: large;
+    height: 2.5rem;
+    width: 5rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
     color: white;
     text-align: center;
-    letter-spacing: 2px;
-    border-width: 5px;
+    letter-spacing: 1px;
+    border: 3px solid #000;
+    line-height: 2.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
-.stop:hover{
+.stop:hover {
     background-color: darkred;
+}
+
+/* --- Mobile adjustments --- */
+@media (max-width: 600px) {
+    .menu {
+        width: 95%;
+        padding: 1.5em 1em;
+    }
+    .menu h1 {
+        font-size: 1.5rem;
+    }
+    .menu button {
+        width: 80%;
+        font-size: 0.9rem;
+    }
+    .score {
+        font-size: 1.2rem;
+    }
+    .stop {
+        width: 4rem;
+        height: 2rem;
+        font-size: 0.9rem;
+        line-height: 2rem;
+    }
 }

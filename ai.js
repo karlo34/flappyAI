@@ -1,23 +1,32 @@
-// ai.js
 export class AIBird {
-    constructor(img,canvasHeight, x = 20, y = 50) {
+    constructor(img, resetCallback, canvasHeight, birdWidth, birdHeight, x = 20, y = 50) {
         this.img = img;
         this.canvasHeight = canvasHeight;
         this.x = x;
         this.y = y;
         this.velocity = 0;
-        this.width = 20;
-        this.height = 15;
+        this.width = birdWidth;
+        this.height = birdHeight;
+        this.gravity = 0.1;
+        this.lift = -1.5;
+        this.resetCallback = resetCallback;
+    }
+
+    setSize(width, height) {
+        this.width = width;
+        this.height = height;
     }
 
     update(poles, gap) {
-        this.velocity += 0.1; // gravity
+        // Gravity
+        this.velocity += this.gravity;
         this.y += this.velocity;
 
+        // Find nearest pole in front of the bird
         let nearest = null;
         let minDist = Infinity;
         for (const pole of poles) {
-            const dist = pole.x - this.x;
+            const dist = pole.x - this.x; // use leading edge
             if (dist < minDist) {
                 minDist = dist;
                 nearest = pole;
@@ -27,10 +36,34 @@ export class AIBird {
         if (nearest) {
             const gapTop = nearest.gapY;
             const gapBottom = nearest.gapY + gap;
-            // console.log(this.y, gapTop, gapBottom);
-            if(this.y > gapBottom - 20 || this.y < this.canvasHeight - 10) {
-                this.velocity = -2; // jump
+            const gapCenter = (gapTop + gapBottom) / 2;
+
+            // Flap if below center of the gap
+            if (this.y + this.height / 2 > gapCenter + 5) {
+                this.velocity = this.lift;
+                this.y += this.velocity;
             }
+        }
+        else {
+            if (this.y < this.canvasHeight - this.height) {
+                this.velocity = this.lift;
+                this.y += this.velocity;
+            }
+            // console.log(this.y, this.canvasHeight - this.height);
+        }
+
+        // Keep bird inside canvas
+        if (this.y < 0) {
+            this.y = 0;
+            this.velocity = 0;
+        }
+        else if (this.y + this.height > this.canvasHeight - 10) {
+            // console.log(this.y + this.height, this.canvasHeight);
+            this.velocity = this.lift;
+            this.y += this.velocity;
+        }
+        else if (this.y + this.height > this.canvasHeight) {
+            if (this.resetCallback) this.resetCallback();
         }
     }
 
