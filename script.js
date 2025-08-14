@@ -182,21 +182,21 @@ function draw() {
             console.log(`Score: ${score}`);
             const scoreElement = document.getElementsByClassName('score')[0];
             scoreElement.innerText = `Score: ${score}`;
-            if(!aiPlaying) {
+            if (!aiPlaying) {
                 if (score > highscore) {
                     highscore = score;
                     highscoreElement.textContent = `Highscore: ${highscore}`;
                     localStorage.setItem('flappyAIRecord', highscore);
                 }
             }
-            else{
+            else {
                 if (score > AIhighscore) {
                     AIhighscore = score;
                     AIhighscoreElement.textContent = `AI highscore: ${AIhighscore}`;
                     localStorage.setItem('flappyAIRecordAI', AIhighscore);
                 }
             }
-            
+
         }
     }
 
@@ -233,7 +233,7 @@ document.getElementById('AI').addEventListener('click', () => {
         document.getElementsByClassName('menu')[0].classList.add('hide');
         document.getElementsByClassName('score')[0].classList.remove('hide');
         stopBtn.classList.remove('hide');
-        
+
 
         // Reset AI bird position
         ai.x = 20;
@@ -249,7 +249,16 @@ document.getElementById('AI').addEventListener('click', () => {
 document.addEventListener('keydown', (e) => {
     if (!aiPlaying && (e.key === ' ' || e.code === 'Space')) velocity = lift;
 });
-
+document.addEventListener('touchstart', (e) => {
+    if (!aiPlaying) {
+        velocity = lift;
+    }
+});
+document.addEventListener('mousedown', (e) => {
+    if (!aiPlaying) {
+        velocity = lift;
+    }
+});
 stopBtn.addEventListener('click', () => {
     if (playing) {
         resetGame();
